@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unsplash_clone/app/app_logic.dart';
+import 'package:unsplash_clone/app/unsplash_clone_app.dart';
 
 void main() {
-  runApp(const MainApp());
-}
+  final appLogic = AppLogic();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  runApp(
+    Provider(
+      create: (context) => appLogic,
+      child: const UnsplashCloneApp(),
+    ),
+  );
 }
