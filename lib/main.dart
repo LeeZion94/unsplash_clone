@@ -12,8 +12,8 @@ void main() async {
   await appLogic.bootStrap();
 
   runApp(
-    Provider(
-      create: (context) => appLogic,
+    Provider.value(
+      value: appLogic,
       child: const UnsplashCloneApp(),
     ),
   );
