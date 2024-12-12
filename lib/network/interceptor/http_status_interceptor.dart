@@ -17,6 +17,24 @@ class HttpStatusInterceptor extends Interceptor {
     }
   }
 
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    final dioException = _generateDioExceptionForOnErrorState(err);
+
+    super.onError(dioException, handler);
+  }
+
+  DioException _generateDioExceptionForOnErrorState(DioException err) {
+    final statusCode = err.response?.statusCode ?? 999;
+    final message = err.response?.data['errors'].first ?? 'Unknown Error';
+
+    return DioException(
+      requestOptions: err.requestOptions,
+      error: statusCode,
+      message: message,
+    );
+  }
+
   void _handleResponseToReject({
     required Response response,
     required ResponseInterceptorHandler handler,

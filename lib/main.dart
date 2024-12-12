@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unsplash_clone/app/app_logic.dart';
 import 'package:unsplash_clone/app/unsplash_clone_app.dart';
+import 'package:unsplash_clone/router/app_router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final appLogic = AppLogic();
+
+  await appLogic.bootStrap();
 
   runApp(
     Provider(
@@ -12,4 +17,10 @@ void main() {
       child: const UnsplashCloneApp(),
     ),
   );
+
+  _goToInitialPage(appLogic.initialPagePath);
+}
+
+void _goToInitialPage(String initalPagePath) {
+  appRouter.go(initalPagePath);
 }

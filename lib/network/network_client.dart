@@ -3,15 +3,15 @@ import 'package:unsplash_clone/network/interceptor/http_status_interceptor.dart'
 import 'package:unsplash_clone/network/interceptor/logging_interceptor.dart';
 
 class NetworkClient {
-  final String _apiBaseUrl;
+  final String baseUrl;
 
-  NetworkClient({required String apiBaseUrl}) : _apiBaseUrl = apiBaseUrl;
+  NetworkClient({required this.baseUrl});
 
   Dio get dio => _generateDio();
 
   Dio _generateDio() {
     final baseOptions = BaseOptions(
-      baseUrl: _apiBaseUrl,
+      baseUrl: baseUrl,
       sendTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
     );

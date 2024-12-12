@@ -20,5 +20,5 @@ class ClientProvider {
   }
 
   NetworkClient get networkClient =>
-      NetworkClient(apiBaseUrl: UnsplashConfig.baseUrl);
+      NetworkClient(baseUrl: UnsplashConfig.baseUrl);
 }
