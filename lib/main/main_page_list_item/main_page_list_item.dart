@@ -17,7 +17,11 @@ class MainPageListItem extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: BlurHash(hash: blurHash),
+      child: BlurHash(
+        hash: blurHash,
+        decodingWidth: 10,
+        decodingHeight: 10,
+      ),
     );
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:unsplash_clone/theme/app_colors.dart';
-import 'package:unsplash_clone/widget/loading_overlay_view_model.dart';
+import 'package:unsplash_clone/util/widget/loading_overlay_view_model.dart';
 
 class LoadingOverlay extends StatefulWidget {
   final LoadingOverlayViewModel _loadingOverlayViewModel;

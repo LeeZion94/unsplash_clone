@@ -6,7 +6,7 @@ import 'package:unsplash_clone/router/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  // native splash 생략
   final appLogic = AppLogic();
 
   await appLogic.bootStrap();
