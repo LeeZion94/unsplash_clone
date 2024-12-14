@@ -6,9 +6,9 @@ part 'profile_image_entity.freezed.dart';
 @freezed
 class ProfileImageEntity with _$ProfileImageEntity {
   const factory ProfileImageEntity({
-    final String? small,
-    final String? medium,
-    final String? large,
+    String? small,
+    String? medium,
+    String? large,
   }) = _ProfileImageEntity;
 
   factory ProfileImageEntity.fromJson(Map<String, dynamic> json) =>
