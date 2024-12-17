@@ -614,10 +614,10 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-12-14T11:33:44.969518Z",
+  "generated": "2024-12-17T08:02:30.993643Z",
   "generator": "pub",
   "generatorVersion": "3.6.0",
   "flutterRoot": "file:///Users/leehyungmin/development/flutter",
-  "flutterVersion": "3.27.0",
+  "flutterVersion": "3.27.1",
   "pubCache": "file:///Users/leehyungmin/.pub-cache"
 }

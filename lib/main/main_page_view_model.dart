@@ -1,40 +1,32 @@
 import 'package:flutter/foundation.dart';
-import 'package:unsplash_clone/main/list_photos_dto_mapper/list_photos_dto_mapper.dart';
-import 'package:unsplash_clone/network/dto/list_photos/list_photos_dto.dart';
+import 'package:unsplash_clone/main/list_topics_dto_mapper/list_topics_dto_mapper.dart';
+import 'package:unsplash_clone/network/dto/list_topics/list_topics_dto.dart';
 import 'package:unsplash_clone/service/service_provider.dart';
 import 'package:unsplash_clone/util/logger.dart';
-import 'package:unsplash_clone/util/notifier.dart';
 
 class MainPageViewModel {
-  final _photosService = ServiceProvider().photosService;
-  final _listPhotosDtoMapper = ListPhotosDtoMapper();
+  final _topicsService = ServiceProvider().topicsService;
+  final _listTopicsDtoMapper = ListTopicsDtoMapper();
 
-  final _listPhotosDtosNotifier = ValueNotifier<List<ListPhotosDto>>([]);
-  ValueListenable<List<ListPhotosDto>> get listPhotosDtosListenable =>
-      _listPhotosDtosNotifier;
-  List<ListPhotosDto> get listPhotosDtos => _listPhotosDtosNotifier.value;
-
-  final _errorNotifer = Notifier();
-  Listenable get errorListenable => _errorNotifer;
+  final _listTopicsDtosNotifier = ValueNotifier<List<ListTopicsDto>>([]);
+  ValueListenable<List<ListTopicsDto>> get listTopicsDtosListenable =>
+      _listTopicsDtosNotifier;
+  List<ListTopicsDto> get listTopicsDtos => _listTopicsDtosNotifier.value;
 
   ValueNotifier<bool>? _isLoadingOverlayVisibilityNotifier;
 
-  Future<void> fetchListPhotos() async {
+  void fetchListTopics() async {
     _showLoadingIndicator();
 
     try {
-      final listPhotosEntity = await _photosService.fetchListPhotos(
-        page: 1,
-        perPage: 10,
-      );
-      final listPhotosDtos = listPhotosEntity.map((entity) {
-        return _listPhotosDtoMapper.mapToDto(entity);
+      final listTopicsEntity = await _topicsService.fetchListTopics();
+      final listTopicsDtos = listTopicsEntity.map((element) {
+        return _listTopicsDtoMapper.mapToDto(element);
       }).toList();
 
-      _listPhotosDtosNotifier.value = listPhotosDtos;
+      _listTopicsDtosNotifier.value = listTopicsDtos;
     } catch (error) {
-      logError('error');
-      _errorNotifer.notify();
+      logError('$error');
     } finally {
       _hideLoadingIndicator();
     }

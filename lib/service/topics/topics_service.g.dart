@@ -26,7 +26,7 @@ class _TopicsService implements TopicsService {
   @override
   Future<List<ListTopicsEntity>> fetchListTopics({
     String orderBy = 'featured',
-    int perPage = 3,
+    int perPage = 10,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -57,6 +57,49 @@ class _TopicsService implements TopicsService {
       _value = _result.data!
           .map((dynamic i) =>
               ListTopicsEntity.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<ListPhotosEntity>> fetchTopicPhotos({
+    required String topicId,
+    required int page,
+    required int perPage,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Authorization': 'Client-ID ZmNw1R1_AdUuQ2FFyaSFX77O7BSlI7mgrvqJsi7CBEY'
+    };
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<ListPhotosEntity>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/topics/${topicId}/photos',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<ListPhotosEntity> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) =>
+              ListPhotosEntity.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
