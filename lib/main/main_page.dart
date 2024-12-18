@@ -64,6 +64,7 @@ class _MainPageState extends State<MainPage>
 
   void _refreshWidget() {
     setState(() {
+      _tabController.dispose();
       _tabController = TabController(
         length: _mainPageViewModel.listTopicsDtos.length + 1,
         vsync: this,
@@ -140,7 +141,11 @@ class _MainPageState extends State<MainPage>
     return _mainPageViewModel.listTopicsDtos.map((element) {
       return Provider(
         create: (context) => TopicPhotosScreenViewModel(),
-        child: TopicPhotosScreen(topicId: element.id),
+        child: TopicPhotosScreen(
+          topicId: element.id,
+          title: element.title,
+          description: element.description,
+        ),
       );
     }).toList();
   }

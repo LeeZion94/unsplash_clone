@@ -3,6 +3,8 @@ import 'package:unsplash_clone/network/entity/list_photos/list_photos_entity.dar
 import 'package:unsplash_clone/util/mapper.dart';
 
 class ListPhotosDtoMapper implements Mapper<ListPhotosEntity, ListPhotosDto> {
+  final _defaultBlurHash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+
   @override
   ListPhotosDto mapToDto(ListPhotosEntity? entity) {
     if (entity == null) {
@@ -29,10 +31,7 @@ class ListPhotosDtoMapper implements Mapper<ListPhotosEntity, ListPhotosDto> {
       throw Exception('imageUrl is Null');
     }
 
-    final blurHash = entity.blurHash;
-    if (blurHash == null) {
-      throw Exception('blurHash is Null');
-    }
+    final blurHash = entity.blurHash ?? _defaultBlurHash;
 
     final userName = entity.user?.userName;
     if (userName == null) {

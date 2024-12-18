@@ -17,6 +17,11 @@ class TopicPhotosScreenViewModel {
       _listPhotosDtosNotifier;
   List<ListPhotosDto> get listPhotosDtos => _listPhotosDtosNotifier.value;
 
+  bool get isDtoEmpty => _listPhotosDtosNotifier.value.isEmpty;
+
+  String get submitButtonBlurHash =>
+      _listPhotosDtosNotifier.value.first.blurHash;
+
   final _errorNotifer = Notifier();
   Listenable get errorListenable => _errorNotifer;
 

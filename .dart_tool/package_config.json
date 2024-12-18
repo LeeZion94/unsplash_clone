@@ -230,6 +230,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "gap",
+      "rootUri": "file:///Users/leehyungmin/.pub-cache/hosted/pub.dev/gap-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "glob",
       "rootUri": "file:///Users/leehyungmin/.pub-cache/hosted/pub.dev/glob-2.1.2",
       "packageUri": "lib/",
@@ -614,7 +620,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-12-17T08:02:30.993643Z",
+  "generated": "2024-12-17T08:17:22.635202Z",
   "generator": "pub",
   "generatorVersion": "3.6.0",
   "flutterRoot": "file:///Users/leehyungmin/development/flutter",
