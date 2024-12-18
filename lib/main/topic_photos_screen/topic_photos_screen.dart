@@ -3,7 +3,7 @@ import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:unsplash_clone/main/max_screen_width_picture_item/max_screen_width_picture_item.dart';
-import 'package:unsplash_clone/main/topic_photos_screen/blur_hash_photo_submit_button.dart';
+import 'package:unsplash_clone/main/topic_photos_screen/blur_hash_photo_submit_widget.dart';
 import 'package:unsplash_clone/main/topic_photos_screen/topic_photos_screen_view_model.dart';
 import 'package:unsplash_clone/theme/app_colors.dart';
 import 'package:unsplash_clone/theme/app_typhography.dart';
@@ -77,7 +77,7 @@ class _TopicPhotosScreenState extends State<TopicPhotosScreen>
   }
 
   void _handleError() {
-    showToastMessage('Error Occurred', context);
+    showToastMessage('에러 발생', context);
   }
 
   void _refreshWidget() {
@@ -107,15 +107,40 @@ class _TopicPhotosScreenState extends State<TopicPhotosScreen>
     return MaxScreenWidthPictureItem(dto: dto);
   }
 
+  Widget _buildSliverImageListView() {
+    return SliverList.builder(
+      itemCount: _topicPhotosScreenViewModel.listPhotosDtos.length,
+      itemBuilder: _buildImageListItem,
+    );
+  }
+
+  Widget _buildBlurHashPhotoSubmitButton() {
+    return BlurHashPhotoSubmitWidget(
+      title: widget._title,
+      descrption: widget._description,
+    );
+  }
+
   Widget _buildImageListView() {
     return SizedBox.expand(
-      child: ListView.builder(
-        cacheExtent: 1000,
-        itemCount: _topicPhotosScreenViewModel.listPhotosDtos.length,
-        itemBuilder: _buildImageListItem,
+      child: CustomScrollView(
+        slivers: [
+          _buildBlurHashPhotoSubmitButton(),
+          _buildSliverImageListView(),
+        ],
       ),
     );
   }
+
+  // Widget _buildImageListView() {
+  //   return SizedBox.expand(
+  //     child: ListView.builder(
+  //       cacheExtent: 1000,
+  //       itemCount: _topicPhotosScreenViewModel.listPhotosDtos.length,
+  //       itemBuilder: _buildImageListItem,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
