@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
+import 'package:unsplash_clone/main/half_screen_width_picture_item/half_screen_width_picture_item.dart';
+import 'package:unsplash_clone/main/main_page_layout_type/main_page_layout_type.dart';
 import 'package:unsplash_clone/main/max_screen_width_picture_item/max_screen_width_picture_item.dart';
-import 'package:unsplash_clone/main/report_edit_only_screen/reposrt_edit_only_screen_view_model.dart';
+import 'package:unsplash_clone/main/report_edit_only_screen/report_edit_only_screen_view_model.dart';
 import 'package:unsplash_clone/util/mixin/toast_message_mixin.dart';
 import 'package:unsplash_clone/util/widget/loading_overlay.dart';
 import 'package:unsplash_clone/util/widget/loading_overlay_view_model.dart';
 
 class ReportEditOnlyScreen extends StatefulWidget {
-  const ReportEditOnlyScreen({super.key});
+  final MainPageLayoutType _mainPageLayoutType;
+
+  const ReportEditOnlyScreen({
+    required MainPageLayoutType mainPageLayoutType,
+    super.key,
+  }) : _mainPageLayoutType = mainPageLayoutType;
 
   @override
   State<ReportEditOnlyScreen> createState() => _ReportEditOnlyScreenState();
@@ -92,20 +100,53 @@ class _ReportEditOnlyScreenState extends State<ReportEditOnlyScreen>
   }
 
   Widget _buildImageListView() {
-    return SizedBox.expand(
-      child: ListView.builder(
-        cacheExtent: 1000,
-        itemCount: _reportEditOnlyScreenViewModel.listPhotosDtos.length,
-        itemBuilder: _buildImageListItem,
-      ),
+    switch (widget._mainPageLayoutType) {
+      case MainPageLayoutType.basic:
+        return _buildBasicLayoutList();
+      case MainPageLayoutType.waterfall:
+        return _buildWaterfallLayoutList();
+    }
+  }
+
+  Widget _buildBasicLayoutList() {
+    return SliverList.builder(
+      itemCount: _reportEditOnlyScreenViewModel.listPhotosDtos.length,
+      itemBuilder: _buildImageListItem,
     );
+  }
+
+  Widget _buildWaterfallImageListItem(BuildContext context, int index) {
+    if (index == _reportEditOnlyScreenViewModel.listPhotosDtos.length - 4) {
+      _appendExistingListPhotosDtos();
+    }
+
+    final dto = _reportEditOnlyScreenViewModel.listPhotosDtos[index];
+
+    return HalfScreenWidthPictureItem(dto: dto);
+  }
+
+  Widget _buildWaterfallLayoutList() {
+    return SliverMasonryGrid(
+      delegate: SliverChildBuilderDelegate(
+        childCount: _reportEditOnlyScreenViewModel.listPhotosDtos.length,
+        _buildWaterfallImageListItem,
+      ),
+      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2),
+    );
+  }
+
+  Widget _buildCustomScrollView() {
+    return CustomScrollView(slivers: [
+      _buildImageListView(),
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _buildImageListView(),
+        _buildCustomScrollView(),
         _buildLoadingOverlay(),
       ],
     );

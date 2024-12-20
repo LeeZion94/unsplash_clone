@@ -194,6 +194,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "flutter_staggered_grid_view",
+      "rootUri": "file:///Users/leehyungmin/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_styled_toast",
       "rootUri": "file:///Users/leehyungmin/.pub-cache/hosted/pub.dev/flutter_styled_toast-2.2.1",
       "packageUri": "lib/",
@@ -620,7 +626,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-12-17T08:17:22.635202Z",
+  "generated": "2024-12-20T07:27:56.293705Z",
   "generator": "pub",
   "generatorVersion": "3.6.0",
   "flutterRoot": "file:///Users/leehyungmin/development/flutter",

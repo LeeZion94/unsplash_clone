@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:unsplash_clone/main/list_topics_dto_mapper/list_topics_dto_mapper.dart';
+import 'package:unsplash_clone/main/main_page_layout_type/main_page_layout_type.dart';
 import 'package:unsplash_clone/network/dto/list_topics/list_topics_dto.dart';
 import 'package:unsplash_clone/service/service_provider.dart';
 import 'package:unsplash_clone/util/logger.dart';
@@ -12,6 +13,12 @@ class MainPageViewModel {
   ValueListenable<List<ListTopicsDto>> get listTopicsDtosListenable =>
       _listTopicsDtosNotifier;
   List<ListTopicsDto> get listTopicsDtos => _listTopicsDtosNotifier.value;
+
+  final _mainPageLayoutTypeNotifier = ValueNotifier(MainPageLayoutType.basic);
+  ValueListenable<MainPageLayoutType> get mainPageLayoutTypeListenable =>
+      _mainPageLayoutTypeNotifier;
+  MainPageLayoutType get mainPageLayoutType =>
+      _mainPageLayoutTypeNotifier.value;
 
   ValueNotifier<bool>? _isLoadingOverlayVisibilityNotifier;
 
@@ -30,6 +37,15 @@ class MainPageViewModel {
     } finally {
       _hideLoadingIndicator();
     }
+  }
+
+  void changeLayoutType() {
+    final mainPageLayoutType = _mainPageLayoutTypeNotifier.value;
+
+    _mainPageLayoutTypeNotifier.value =
+        mainPageLayoutType == MainPageLayoutType.basic
+            ? MainPageLayoutType.waterfall
+            : MainPageLayoutType.basic;
   }
 
   void _showLoadingIndicator() {
