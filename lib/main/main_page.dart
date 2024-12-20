@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unsplash_clone/main/main_page_view_model.dart';
 import 'package:unsplash_clone/main/report_edit_only_screen/report_edit_only_screen.dart';
-import 'package:unsplash_clone/main/report_edit_only_screen/reposrt_edit_only_screen_view_model.dart';
+import 'package:unsplash_clone/main/report_edit_only_screen/report_edit_only_screen_view_model.dart';
 import 'package:unsplash_clone/main/topic_photos_screen/topic_photos_screen.dart';
 import 'package:unsplash_clone/main/topic_photos_screen/topic_photos_screen_view_model.dart';
 import 'package:unsplash_clone/theme/app_colors.dart';
@@ -47,11 +47,16 @@ class _MainPageState extends State<MainPage>
   }
 
   void _addListeners() {
-    _mainPageViewModel.listTopicsDtosListenable.addListener(_refreshWidget);
+    _mainPageViewModel.listTopicsDtosListenable
+        .addListener(_refreshTabController);
+    _mainPageViewModel.mainPageLayoutTypeListenable.addListener(_refreshWidget);
   }
 
   void _removeListeners() {
-    _mainPageViewModel.listTopicsDtosListenable.removeListener(_refreshWidget);
+    _mainPageViewModel.listTopicsDtosListenable
+        .removeListener(_refreshTabController);
+    _mainPageViewModel.mainPageLayoutTypeListenable
+        .removeListener(_refreshWidget);
   }
 
   void _addPostFrameCallBack() {
@@ -63,6 +68,10 @@ class _MainPageState extends State<MainPage>
   }
 
   void _refreshWidget() {
+    setState(() {});
+  }
+
+  void _refreshTabController() {
     setState(() {
       _tabController.dispose();
       _tabController = TabController(
@@ -82,7 +91,21 @@ class _MainPageState extends State<MainPage>
         'Unsplash',
         style: AppTypography.shared.heading_heading2(AppColors.fg_on_contrast),
       ),
-      backgroundColor: AppColors.bg_contrast,
+      actions: [
+        IconButton(
+          onPressed: _mainPageViewModel.changeLayoutType,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          padding: EdgeInsets.zero,
+          icon: Image.asset(
+            _mainPageViewModel.mainPageLayoutType.iconImagePath,
+            width: 30,
+            height: 30,
+            fit: BoxFit.cover,
+          ),
+        )
+      ],
+      backgroundColor: AppColors.bg_contrast, //AppColors.bg_contrast,
       surfaceTintColor: AppColors.bg_contrast,
       centerTitle: true,
       toolbarHeight: 40,
@@ -133,7 +156,9 @@ class _MainPageState extends State<MainPage>
   Widget _buildReportEditOnlyScreen() {
     return Provider(
       create: (context) => ReportEditOnlyScreenViewModel(),
-      child: const ReportEditOnlyScreen(),
+      child: ReportEditOnlyScreen(
+        mainPageLayoutType: _mainPageViewModel.mainPageLayoutType,
+      ),
     );
   }
 
@@ -145,6 +170,7 @@ class _MainPageState extends State<MainPage>
           topicId: element.id,
           title: element.title,
           description: element.description,
+          mainPageLayoutType: _mainPageViewModel.mainPageLayoutType,
         ),
       );
     }).toList();
@@ -169,6 +195,7 @@ class _MainPageState extends State<MainPage>
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              _buildAppBar(),
               _buildTabBar(),
               _buildTabBarView(),
             ],
@@ -182,7 +209,6 @@ class _MainPageState extends State<MainPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
       backgroundColor: AppColors.bg_contrast,
       body: _buildBody(),
     );

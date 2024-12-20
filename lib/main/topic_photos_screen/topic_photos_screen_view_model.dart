@@ -10,7 +10,7 @@ class TopicPhotosScreenViewModel {
   final _listPhotosDtoMapper = ListPhotosDtoMapper();
 
   int pageCount = 1;
-  final _perPageItemCount = 20;
+  final _perPageItemCount = 10;
 
   final _listPhotosDtosNotifier = ValueNotifier<List<ListPhotosDto>>([]);
   ValueListenable<List<ListPhotosDto>> get listPhotosDtosListenable =>

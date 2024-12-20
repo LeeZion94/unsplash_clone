@@ -85,7 +85,7 @@ class _TopicsService implements TopicsService {
     )
         .compose(
           _dio.options,
-          '/topics/${topicId}/photos',
+          '/topics/${topicId}/photos?page=${page}&per_page=${perPage}',
           queryParameters: queryParameters,
           data: _data,
         )

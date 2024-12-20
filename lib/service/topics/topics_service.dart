@@ -17,7 +17,7 @@ abstract class TopicsService {
     @Path('per_page') int perPage = 10,
   });
 
-  @GET('/topics/{id_or_slug}/photos')
+  @GET('/topics/{id_or_slug}/photos?page={page}&per_page={per_page}')
   @Headers({'Authorization': UnsplashConfig.accessToken})
   Future<List<ListPhotosEntity>> fetchTopicPhotos({
     @Path('id_or_slug') required String topicId,
